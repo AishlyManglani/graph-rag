@@ -6,6 +6,9 @@ A modular prototype RAG system that ingests text, images, and audio, builds a kn
 
 ---
 
+## Demo Video:
+https://drive.google.com/file/d/1KpIAw14Djjxp_ffA5OTCxzDSPJ_l7u2A/view?usp=sharing
+
 ## 🚀 Features
 - ✅ Multimodal ingestion: `.pdf`, `.jpg/.png`, `.mp3`
 - ✅ Entity and relation extraction via LLM
