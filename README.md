@@ -27,8 +27,85 @@ A modular prototype RAG system that ingests text, images, and audio, builds a kn
 
 ---
 
-## 🧪 Evaluation
 
-Run:
+## 🛠️ Local Setup Instructions
+
+### ✅ 1. Clone the Repository
 ```bash
-python evals/evaluate.py
+git clone https://github.com/AishlyManglani/graph-rag.git
+cd graph-rag
+```
+
+---
+
+### ✅ 2. Create and Activate a Virtual Environment
+#### On Windows:
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+#### On macOS/Linux:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+### ✅ 3. Install Dependencies
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+> ⚠️ Ensure you have `ffmpeg` and `tesseract` installed and in your system PATH:
+> - **Tesseract**: https://github.com/tesseract-ocr/tesseract
+> - **FFmpeg**: https://ffmpeg.org/download.html
+
+---
+
+### ✅ 4. Set Up Environment Variables
+Create a `.env` file in the project root:
+```env
+GOOGLE_API_KEY=your-gemini-api-key
+```
+
+---
+
+### ✅ 5. Start Neo4j and Qdrant
+Ensure Docker is installed and running, then:
+```bash
+docker compose up -d
+```
+This will start:
+- `neo4j` on ports `7474` (UI) and `7687` (Bolt)
+- `qdrant` on port `6333` (Vector DB)
+
+---
+
+### ✅ 6. Launch the App
+```bash
+streamlit run run.py
+```
+Then open [http://localhost:8501](http://localhost:8501) in your browser.
+
+---
+
+### ✅ 7. Run Evaluation Suite (Optional)
+```bash
+python -m evals.evaluate
+```
+This runs a minimal set of test queries and logs accuracy + latency.
+
+---
+
+## ✅ File Types Supported
+- PDF (.pdf)
+- Image (.jpg, .png, .jpeg)
+- Audio (.mp3)
+
+
+
+
+

@@ -1,18 +1,28 @@
 import whisper
+import os
+import google.generativeai as genai
 
 try:
     model = whisper.load_model("base")
-except Exception as e:
+except Exception:
     model = None
-    print("⚠️ Whisper model failed to load:", e)
+
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def transcribe_audio(file):
-    if not model:
-        return "[Transcription unavailable: Whisper not loaded]"
     try:
-        result = model.transcribe(file.name)
-        transcript = result.get("text", "").strip()
-        return transcript if transcript else "[No audio content detected]"
+        if model:
+            result = model.transcribe(file.name)
+            text = result.get("text", "").strip()
+            if text: return text
+    except Exception:
+        pass
+
+    # Fallback: use Gemini for captioning
+    try:
+        audio_path = file.name
+        model = genai.GenerativeModel("gemini-pro")
+        response = model.generate_content(f"Summarize this audio file: {audio_path}")
+        return response.text.strip() or "[No transcription from Gemini]"
     except Exception as e:
-        print(f"[ERROR] Transcription failed: {e}")
-        return "[Transcription failed]"
+        return f"[Audio analysis failed: {e}]"

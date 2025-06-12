@@ -28,6 +28,7 @@ UNUSABLE_RESPONSES = {
     None
 }
 
+
 def launch_ui():
     st.title("Multimodal Graph RAG Assistant")
     uploaded_file = st.file_uploader("Upload your file (.pdf/.jpg/.png/.mp3)", type=["pdf", "jpg", "png", "mp3", "jpeg"])
@@ -42,6 +43,7 @@ def launch_ui():
 
             if (
                 isinstance(content, str)
+                and content.strip()
                 and content.strip().lower() not in UNUSABLE_RESPONSES
             ):
                 clean_text = content.strip()
